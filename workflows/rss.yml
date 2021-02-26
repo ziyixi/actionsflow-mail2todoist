@@ -1,6 +1,9 @@
 on:
-  rss:
-    url: https://hnrss.org/newest?points=300&count=3
+  email:
+    imap:
+      host: outlook.office365.com
+      user: ${{secrets.EMAIL_USER}}
+      password: ${{secrets.EMAIL_PASSWORD}}
 jobs:
   print:
     name: Print
@@ -8,10 +11,14 @@ jobs:
     steps:
       - name: Print Outputs
         env:
-          title: ${{on.rss.outputs.title}}
-          contentSnippet: ${{on.rss.outputs.contentSnippet}}
-          link: ${{on.rss.outputs.link}}
+          SUBJECT: ${{(on.email.outputs.subject)}}
+          DUE: ${{(on.email.outputs.date)}}
+          CONTENT: ${{(on.email.outputs.textAsHtml)}}
+          SENDER_NAME: ${{(on.email.outputs.from.value.name)}}
+          SENDER_ADDRESS: ${{(on.email.outputs.from.value.address)}}
         run: |
-          echo title: $title
-          echo contentSnippet: $contentSnippet
-          echo link: $link
+          echo $SUBJECT
+          echo $DUE
+          echo $CONTENT
+          echo $SENDER_NAME
+          echo $SENDER_ADDRESS
