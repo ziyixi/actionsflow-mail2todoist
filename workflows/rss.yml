@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Install Python
         run: |
-          apt-get -y install python
+          apt-get -y install python3.7
       - name: Install Packages
         run: |
           pip install todoist-python
