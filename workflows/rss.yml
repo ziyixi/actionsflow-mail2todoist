@@ -9,16 +9,20 @@ jobs:
     name: Print
     runs-on: ubuntu-latest
     steps:
-      - name: Print Outputs
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.7"
+      - name: Install Packages
+        run: |
+          pip install todoist-python
+          pip install markdownify
+      - name: Update Todoist
         env:
           SUBJECT: ${{(on.email.outputs.subject)}}
           DUE: ${{(on.email.outputs.date)}}
           CONTENT: ${{(on.email.outputs.textAsHtml)}}
-          SENDER_NAME: ${{(on.email.outputs.from.text)}}
-          SENDER_ADDRESS: ${{(on.email.outputs.from.value.address)}}
+          SENDER: ${{(on.email.outputs.from.text)}}
+          PROJECT: ${{secrets.PROJECT}}
+          SECTION: ${{secrets.SECTION}}
         run: |
-          echo  $SUBJECT
-          echo $DUE
-          echo $CONTENT
-          echo $SENDER_NAME
-          echo $SENDER_ADDRESS
+          python post_task.py
