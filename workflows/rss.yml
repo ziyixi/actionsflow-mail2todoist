@@ -17,7 +17,7 @@ jobs:
           SENDER_NAME: ${{(on.email.outputs.from.value.name)}}
           SENDER_ADDRESS: ${{(on.email.outputs.from.value.address)}}
         run: |
-          echo $SUBJECT
+          echo  $SUBJECT
           echo $DUE
           echo $CONTENT
           echo $SENDER_NAME
