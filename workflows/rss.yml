@@ -14,7 +14,7 @@ jobs:
           SUBJECT: ${{(on.email.outputs.subject)}}
           DUE: ${{(on.email.outputs.date)}}
           CONTENT: ${{(on.email.outputs.textAsHtml)}}
-          SENDER_NAME: ${{(on.email.outputs.from.value.name)}}
+          SENDER_NAME: ${{(on.email.outputs.from)}}
           SENDER_ADDRESS: ${{(on.email.outputs.from.value.address)}}
         run: |
           echo  $SUBJECT
