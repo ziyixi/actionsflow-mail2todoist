@@ -9,11 +9,9 @@ jobs:
     name: Print
     runs-on: ubuntu-latest
     steps:
-      - name: Test
+      - name: Get Py code
         run: |
-          pwd
-          ls
-          docker cp post_task.py `cat /etc/hostname`:`pwd`
+          wget https://raw.githubusercontent.com/ziyixi/actionsflow-mail2todoist/main/post_task.py
       - name: Install Python
         run: |
           apt-get update
@@ -34,4 +32,4 @@ jobs:
         run: |
           pwd
           ls
-          python3 ./dist/post_task.py
+          python3 post_task.py
