@@ -9,10 +9,10 @@ jobs:
     name: Print
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-python@v2
-        with:
-          python-version: "3.7"
-          architecture: "x64"
+      - name: Install Python
+        run: |
+          apt-get update
+          apt-get install python3 -y
       - name: Install Packages
         run: |
           pip install todoist-python
