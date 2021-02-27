@@ -38,5 +38,5 @@ jobs:
           echo_command() { printf '%s\n' "${*}"; "${@}"; }
           content_nobreak=$CONTENT
           echo "{\"task_id\": $TASKID ,\"content\": \"$content_nobreak\"}" > content.txt
-          sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' content.txt > content.txt
-          echo_command curl "https://api.todoist.com/rest/v1/comments" -X POST --data-binary @content.txt  -H "Content-Type: application/json" -H "Authorization: Bearer $AUTH" -H "content-type: text/csv"
+          sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' content.txt > content_n.txt
+          echo_command curl "https://api.todoist.com/rest/v1/comments" -X POST --data-binary @content_n.txt  -H "Content-Type: application/json" -H "Authorization: Bearer $AUTH" -H "content-type: text/csv"
