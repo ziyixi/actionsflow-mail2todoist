@@ -12,10 +12,10 @@ jobs:
       - name: Install Python
         run: |
           apt-get update
-          apt-get install software-properties-common
-          add-apt-repository ppa:deadsnakes/ppa
+          apt-get install software-properties-common -y
+          add-apt-repository ppa:deadsnakes/ppa -y
           apt-get update
-          apt-get install python3.8
+          apt-get install python3.8 -y
       - name: Install Packages
         run: |
           pip install todoist-python
