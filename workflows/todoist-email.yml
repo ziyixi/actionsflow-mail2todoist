@@ -1,0 +1,53 @@
+on:
+  email:
+    imap:
+      host: outlook.office365.com
+      user: ${{secrets.EMAIL_USER}}
+      password: ${{secrets.EMAIL_PASSWORD}}
+jobs:
+  print:
+    name: ToTodoist
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run python script
+        env:
+          AUTH: ${{secrets.AUTH}}
+          PROJECT: ${{secrets.PROJECT}}
+          SECTION: ${{secrets.SECTION}}
+          SUBJECT: ${{(on.email.outputs.subject)}}
+          DUE: ${{(on.email.outputs.date)}}
+          SENDER: ${{(on.email.outputs.from.text)}}
+          CONTENT: ${{(on.email.outputs.text)}}
+        run: |
+          python post_task.py
+      # - name: Update Subject
+      #   env:
+      #     AUTH: ${{secrets.AUTH}}
+      #     SUBJECT: ${{(on.email.outputs.subject)}}
+      #     DUE: ${{(on.email.outputs.date)}}
+      #     PROJECT: ${{secrets.PROJECT}}
+      #     SECTION: ${{secrets.SECTION}}
+      #   run: |
+      #     curl "https://api.todoist.com/rest/v1/tasks" \
+      #     -X POST \
+      #     --data "{\"content\": \"$SUBJECT\", \"project_id\": $PROJECT, \"section_id\": $SECTION, \"due_string\": \"$DUE\"}" \
+      #     -H "Content-Type: application/json" \
+      #     -H "Authorization: Bearer $AUTH" > task.json
+      # - name: Get task id
+      #   id: taskid
+      #   uses: notiz-dev/github-action-json-property@release
+      #   with:
+      #     path: "task.json"
+      #     prop_path: "id"
+      # - name: Update Comment
+      #   env:
+      #     AUTH: ${{secrets.AUTH}}
+      #     CONTENT: ${{(on.email.outputs.text)}}
+      #     SENDER: ${{(on.email.outputs.from.text)}}
+      #     TASKID: ${{(steps.taskid.outputs.prop)}}
+      #   run: |
+      #     echo_command() { printf '%s\n' "${*}"; "${@}"; }
+      #     content_nobreak=$CONTENT
+      #     echo "{\"task_id\": $TASKID ,\"content\": \"SENDER: $SENDER\n$content_nobreak\"}" > content.txt
+      #     sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' content.txt > content_n.txt
+      #     echo_command curl "https://api.todoist.com/rest/v1/comments" -X POST --data-binary @content_n.txt  -H "Content-Type: application/json" -H "Authorization: Bearer $AUTH" -H "content-type: text/csv"

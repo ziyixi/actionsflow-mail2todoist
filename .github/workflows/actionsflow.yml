@@ -38,4 +38,4 @@ jobs:
         run: |
           rm -f ./.actrc
           rm -f ~/.actrc
-          act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=actionsflow/act-environment:v99 -P ubuntu-18.04=actionsflow/act-environment:v99
+          act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=xiziyi/python-nodejs-todoist:v1 -P ubuntu-18.04=xiziyi/python-nodejs-todoist:v1 --bind
