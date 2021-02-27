@@ -27,4 +27,4 @@ jobs:
           PROJECT: ${{secrets.PROJECT}}
           SECTION: ${{secrets.SECTION}}
         run: |
-          python3 post_task.py
+          python3 ./dist/post_task.py
