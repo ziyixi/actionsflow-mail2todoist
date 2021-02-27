@@ -2,7 +2,7 @@ from todoist.api import TodoistAPI
 import os
 from markdownify import markdownify as md
 
-auth_key = os.getenv("INPUT_AUTH")
+auth_key = os.getenv("AUTH")
 
 print(os.environ)
 print("@@@@@")
@@ -12,15 +12,15 @@ api.sync()
 # predefined ids
 # project_id = 2259411554
 # section_id = 39189879
-project_id = int(os.getenv("INPUT_PROJECT"))
-section_id = int(os.getenv("INPUT_SECTION"))
+project_id = int(os.getenv("PROJECT"))
+section_id = int(os.getenv("SECTION"))
 
 # get env
-subject = os.getenv("INPUT_SUBJECT")
-due = os.getenv("INPUT_DUE")
+subject = os.getenv("SUBJECT")
+due = os.getenv("DUE")
 
-sender = md(os.getenv("INPUT_SENDER"))
-comment_body = md(os.getenv("INPUT_CONTENT"))
+sender = md(os.getenv("SENDER"))
+comment_body = md(os.getenv("CONTENT"))
 comment_head = f"**FROM {sender}\n\n"
 comment = comment_head+comment_body
 
