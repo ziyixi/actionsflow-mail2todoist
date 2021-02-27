@@ -3,6 +3,7 @@ import os
 from markdownify import markdownify as md
 
 auth_key = os.getenv("AUTH")
+print(auth_key)
 api = TodoistAPI(auth_key)
 api.sync()
 
