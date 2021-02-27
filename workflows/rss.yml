@@ -28,24 +28,15 @@ jobs:
         with:
           path: "task.json"
           prop_path: "id"
-      - name: Save HTML
-        env:
-          CONTENT: ${{(on.email.outputs.textAsHtml)}}
-        run: |
-          echo $CONTENT > content.html
-      - name: Convert HTML to Markdown
-        uses: docker://pandoc/core:2.9
-        with:
-          # args: "--from html --to markdown_strict -o content_md.txt content_html.txt"
-          args: >-
-            content.html
-            --output=content.md
       - name: Update Comment
         env:
           AUTH: ${{secrets.AUTH}}
+          CONTENT: ${{(on.email.outputs.text)}}
           SENDER: ${{(on.email.outputs.from.text)}}
           TASKID: ${{(steps.taskid.outputs.prop)}}
         run: |
           echo_command() { printf '%s\n' "${*}"; "${@}"; }
-          cat content.md
-          echo_command curl "https://api.todoist.com/rest/v1/comments" -X POST --data-binary @content.md  -H "Content-Type: application/json" -H "Authorization: Bearer $AUTH" -H "content-type: text/csv"
+          content_nobreak=$CONTENT
+          echo "{\"task_id\": $TASKID ,\"content\": \"SENDER: $SENDER\n$content_nobreak\"}" > content.txt
+          sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' content.txt > content_n.txt
+          echo_command curl "https://api.todoist.com/rest/v1/comments" -X POST --data-binary @content_n.txt  -H "Content-Type: application/json" -H "Authorization: Bearer $AUTH" -H "content-type: text/csv"
