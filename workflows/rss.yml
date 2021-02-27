@@ -36,4 +36,4 @@ jobs:
           TASKID: ${{(steps.taskid.outputs.prop)}}
         run: |
           echo_command() { printf '%s\n' "${*}"; "${@}"; }
-          echo_command curl "https://api.todoist.com/rest/v1/comments" -X POST --data "{\"task_id\": $TASKID ,\"content\": $CONTENT}" -H "Content-Type: application/json" -H "Authorization: Bearer $AUTH"
+          echo_command curl "https://api.todoist.com/rest/v1/comments" -X POST --data "{\"task_id\": $TASKID ,\"content\": \"$CONTENT\"}" -H "Content-Type: application/json" -H "Authorization: Bearer $AUTH"
