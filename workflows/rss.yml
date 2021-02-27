@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update Todoist
-        uses: actionsflow/axios@v1
+        # uses: actionsflow/axios@v1
         env:
           AUTH: ${{secrets.AUTH}}
           SUBJECT: ${{(on.email.outputs.subject)}}
@@ -19,14 +19,14 @@ jobs:
           SENDER: ${{(on.email.outputs.from.text)}}
           PROJECT: ${{secrets.PROJECT}}
           SECTION: ${{secrets.SECTION}}
-        with:
-          url: https://api.todoist.com/rest/v1/tasks
-          method: "POST"
-          headers: '{ "Authorization": "Bearer <<<${{env.AUTH}}>>>" }'
-          data: '{"content": <<<${{env.SUBJECT}}>>>, "project_id": <<<${{env.PROJECT}}>>>, "section_id": <<<${{env.SECTION}}>>>, "due": {"string": <<<${{env.DUE}}>>>}}'
-        # run: |
-        #   curl "https://api.todoist.com/rest/v1/tasks" \
-        #   -X POST \
-        #   --data '{"content": $SUBJECT, "project_id": $(PROJECT), "section_id": $(SECTION), "due": {"string": $(DUE)}}' \
-        #   -H "Content-Type: application/json" \
-        #   -H "Authorization: Bearer $(AUTH)"
+        # with:
+        #   url: https://api.todoist.com/rest/v1/tasks
+        #   method: "POST"
+        #   headers: '{ "Authorization": "Bearer <<<${{env.AUTH}}>>>" }'
+        #   data: '{"content": <<<${{env.SUBJECT}}>>>, "project_id": <<<${{env.PROJECT}}>>>, "section_id": <<<${{env.SECTION}}>>>, "due": {"string": <<<${{env.DUE}}>>>}}'
+        run: |
+          curl "https://api.todoist.com/rest/v1/tasks" \
+          -X POST \
+          --data "{\"content\": \"$SUBJECT\", \"project_id\": $PROJECT, \"section_id\": $SECTION, \"due_string\": \"$DUE\"}" \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer e701c6367e592f6c90ad7c404ca0d1238b4b3571"
