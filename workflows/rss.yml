@@ -32,11 +32,14 @@ jobs:
         env:
           CONTENT: ${{(on.email.outputs.textAsHtml)}}
         run: |
-          echo $CONTENT > content_html.txt
+          echo $CONTENT > content.html
       - name: Convert HTML to Markdown
         uses: docker://pandoc/core:2.9
         with:
-          args: "--from html --to markdown_strict -o content_md.txt content_html.txt"
+          # args: "--from html --to markdown_strict -o content_md.txt content_html.txt"
+          args: >-
+            content.html
+            --output=content.md
       - name: Update Comment
         env:
           AUTH: ${{secrets.AUTH}}
@@ -44,5 +47,5 @@ jobs:
           TASKID: ${{(steps.taskid.outputs.prop)}}
         run: |
           echo_command() { printf '%s\n' "${*}"; "${@}"; }
-          cat content_md.txt
-          echo_command curl "https://api.todoist.com/rest/v1/comments" -X POST --data-binary @content_md.txt  -H "Content-Type: application/json" -H "Authorization: Bearer $AUTH" -H "content-type: text/csv"
+          cat content.md
+          echo_command curl "https://api.todoist.com/rest/v1/comments" -X POST --data-binary @content.md  -H "Content-Type: application/json" -H "Authorization: Bearer $AUTH" -H "content-type: text/csv"
