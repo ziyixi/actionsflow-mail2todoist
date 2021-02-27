@@ -40,7 +40,7 @@ jobs:
           echo $CONTENT
           curl "https://api.todoist.com/rest/v1/comments" \
           -X POST \
-          --data "{\"task_id\":${{steps.taskid.outputs.prop}} ,\"content\":\"SENDER: $SENDER \n$CONTENT\"}" \
+          --data "{\"task_id\": $TASKID ,\"content\": $CONTENT}" \
           -H "Content-Type: application/json" \
           -H "Authorization: Bearer $AUTH" > task.json
           cat task.json
