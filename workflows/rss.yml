@@ -13,6 +13,7 @@ jobs:
         run: |
           pwd
           ls
+          docker cp post_task.py `cat /etc/hostname`:`pwd`
       - name: Install Python
         run: |
           apt-get update
