@@ -6,23 +6,11 @@ on:
       password: ${{secrets.EMAIL_PASSWORD}}
 jobs:
   print:
-    name: Print
+    name: ToTodoist
     runs-on: ubuntu-latest
     steps:
-      - name: Install Packages
-        run: |
-          apt-get update
-          apt-get install python3 -y
-          apt-get install python3-pip -y
-          apt-get install wget -y
-      - name: Get Py code
-        run: |
-          wget https://raw.githubusercontent.com/ziyixi/actionsflow-mail2todoist/main/post_task.py
-      - name: Install Packages
-        run: |
-          pip3 install todoist-python
-          pip3 install markdownify
       - name: Update Todoist
+        uses: actionsflow/axios@v1
         env:
           AUTH: ${{secrets.AUTH}}
           SUBJECT: ${{(on.email.outputs.subject)}}
@@ -31,7 +19,14 @@ jobs:
           SENDER: ${{(on.email.outputs.from.text)}}
           PROJECT: ${{secrets.PROJECT}}
           SECTION: ${{secrets.SECTION}}
-        run: |
-          pwd
-          ls
-          python3 post_task.py
+        with:
+          url: https://api.todoist.com/rest/v1/tasks
+          method: "POST"
+          headers: '{ "Authorization": Bearer <<<${{env.AUTH}}>>> }'
+          data: '{"content": <<<${{env.SUBJECT}}>>>, "project_id": <<<${{env.PROJECT}}>>>, "section_id": <<<${{env.SECTION}}>>>, "due": {"string": <<<${{env.DUE}}>>>}}'
+        # run: |
+        #   curl "https://api.todoist.com/rest/v1/tasks" \
+        #   -X POST \
+        #   --data '{"content": $SUBJECT, "project_id": $(PROJECT), "section_id": $(SECTION), "due": {"string": $(DUE)}}' \
+        #   -H "Content-Type: application/json" \
+        #   -H "Authorization: Bearer $(AUTH)"
