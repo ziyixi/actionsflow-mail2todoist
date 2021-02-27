@@ -23,7 +23,8 @@ jobs:
           pip3 install todoist-python
           pip3 install markdownify
       - name: Update Todoist
-        env:
+        env: ${{secrets.PROJECT}}
+          AUTH: ${{secrets.AUTH}}
           SUBJECT: ${{(on.email.outputs.subject)}}
           DUE: ${{(on.email.outputs.date)}}
           CONTENT: ${{(on.email.outputs.textAsHtml)}}
