@@ -9,6 +9,10 @@ jobs:
     name: Print
     runs-on: ubuntu-latest
     steps:
+      - name: Test
+        run: |
+          pwd
+          ls
       - name: Install Python
         run: |
           apt-get update
