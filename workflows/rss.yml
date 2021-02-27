@@ -16,8 +16,8 @@ jobs:
           apt-get install python3-pip -y
       - name: Install Packages
         run: |
-          pip install todoist-python
-          pip install markdownify
+          pip3 install todoist-python
+          pip3 install markdownify
       - name: Update Todoist
         env:
           SUBJECT: ${{(on.email.outputs.subject)}}
@@ -27,4 +27,4 @@ jobs:
           PROJECT: ${{secrets.PROJECT}}
           SECTION: ${{secrets.SECTION}}
         run: |
-          python post_task.py
+          python3 post_task.py
