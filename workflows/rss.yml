@@ -22,7 +22,7 @@ jobs:
         with:
           url: https://api.todoist.com/rest/v1/tasks
           method: "POST"
-          headers: '{ "Authorization": Bearer <<<${{env.AUTH}}>>> }'
+          headers: '{ "Authorization": "Bearer <<<${{env.AUTH}}>>>" }'
           data: '{"content": <<<${{env.SUBJECT}}>>>, "project_id": <<<${{env.PROJECT}}>>>, "section_id": <<<${{env.SECTION}}>>>, "due": {"string": <<<${{env.DUE}}>>>}}'
         # run: |
         #   curl "https://api.todoist.com/rest/v1/tasks" \
