@@ -9,14 +9,15 @@ jobs:
     name: Print
     runs-on: ubuntu-latest
     steps:
-      - name: Get Py code
-        run: |
-          wget https://raw.githubusercontent.com/ziyixi/actionsflow-mail2todoist/main/post_task.py
-      - name: Install Python
+      - name: Install Packages
         run: |
           apt-get update
           apt-get install python3 -y
           apt-get install python3-pip -y
+          apt-get install wget -y
+      - name: Get Py code
+        run: |
+          wget https://raw.githubusercontent.com/ziyixi/actionsflow-mail2todoist/main/post_task.py
       - name: Install Packages
         run: |
           pip3 install todoist-python
