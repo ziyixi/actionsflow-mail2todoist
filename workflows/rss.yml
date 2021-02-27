@@ -37,4 +37,6 @@ jobs:
         run: |
           echo_command() { printf '%s\n' "${*}"; "${@}"; }
           content_nobreak=$CONTENT
-          echo_command curl "https://api.todoist.com/rest/v1/comments" -X POST --data $"{\"task_id\": $TASKID ,\"content\": \"$content_nobreak\"}" -H "Content-Type: application/json" -H "Authorization: Bearer $AUTH"
+          echo "{\"task_id\": $TASKID ,\"content\": \"$content_nobreak\"}" > content.txt
+          cat content.txt
+          echo_command curl "https://api.todoist.com/rest/v1/comments" -X POST --data-binary @content.txt  -H "Content-Type: application/json" -H "Authorization: Bearer $AUTH" -H "content-type: text/csv"
