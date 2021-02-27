@@ -5,6 +5,7 @@ from markdownify import markdownify as md
 auth_key = os.getenv("INPUT_AUTH")
 
 print(os.environ)
+print("@@@@@")
 api = TodoistAPI(auth_key)
 api.sync()
 
