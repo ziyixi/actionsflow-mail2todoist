@@ -19,7 +19,7 @@ due = os.getenv("DUE")
 
 sender = md(os.getenv("SENDER"))
 comment_body = md(os.getenv("CONTENT"))
-comment_head = f"**FROM {sender}\n\n"
+comment_head = f"**FROM {sender}**\n\n"
 comment = comment_head+comment_body
 
 
