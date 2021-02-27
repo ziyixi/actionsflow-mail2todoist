@@ -4,7 +4,7 @@ from markdownify import markdownify as md
 
 auth_key = os.getenv("INPUT_AUTH")
 
-print(os.getenv("INPUT_AUTH"), int(os.getenv("INPUT_PROJECT")))
+print(os.environ)
 api = TodoistAPI(auth_key)
 api.sync()
 
