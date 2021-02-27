@@ -33,7 +33,11 @@ jobs:
           AUTH: ${{secrets.AUTH}}
           CONTENT: ${{(on.email.outputs.text)}}
           SENDER: ${{(on.email.outputs.from.text)}}
+          TASKID: ${{(jobs.print.taskid.outputs.prop)}}
         run: |
+          echo $SENDER
+          echo $TASKID
+          echo $CONTENT
           curl "https://api.todoist.com/rest/v1/comments" \
           -X POST \
           --data "{\"task_id\":${{steps.taskid.outputs.prop}} ,\"content\":\"SENDER: $SENDER \n$CONTENT\"}" \
