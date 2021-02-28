@@ -1,7 +1,7 @@
 name: Actionsflow
 on:
   # schedule:
-  #   - cron: "*/1 * * * *"
+  #   - cron: "*/15 * * * *"
   push:
     branches:
       - main
@@ -35,7 +35,4 @@ jobs:
       - name: Setup act
         uses: actionsflow/setup-act-for-actionsflow@v1
       - name: Run act
-        run: |
-          rm -f ./.actrc
-          rm -f ~/.actrc
-          act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=xiziyi/python-nodejs-todoist:v1 -P ubuntu-18.04=xiziyi/python-nodejs-todoist:v1 --bind
+        run: act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=actionsflow/act-environment:v1 -P ubuntu-18.04=actionsflow/act-environment:v1 -P self-hosted=xiziyi/python-nodejs-todoist:v1
