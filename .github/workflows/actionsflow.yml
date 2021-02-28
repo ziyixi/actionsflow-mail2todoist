@@ -1,7 +1,7 @@
 name: Actionsflow
 on:
-  # schedule:
-  #   - cron: "*/5 * * * *"
+  schedule:
+    - cron: "*/5 * * * *"
   push:
     branches:
       - main
@@ -22,7 +22,7 @@ on:
         default: "false"
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: Run
     steps:
       - uses: actions/checkout@v2
@@ -38,4 +38,4 @@ jobs:
         run: |
           rm -f ./.actrc
           rm -f ~/.actrc
-          act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=xiziyi/python-nodejs-todoist:v1 -P ubuntu-18.04=xiziyi/python-nodejs-todoist:v1 --bind
+          act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=xiziyi/python-nodejs-todoist:v1 -P ubuntu-18.04=xiziyi/python-nodejs-todoist:v1 -P self-hosted=xiziyi/python-nodejs-todoist:v1 --bind
